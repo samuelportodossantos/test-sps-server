@@ -19,11 +19,22 @@ export class MemoryDatabase implements DBInterface {
         }
     }
 
-    list(page: number = 1, perPage: number = 10): { data: any[]; total: number; page: number; perPage: number } {
-        const allItems = Array.from(this.dataList.entries()).map(([id, obj]) => ({
-            id,
-            ...obj
-        }));
+    list(
+        page: number = 1,
+        perPage: number = 10,
+        fields?: string[]
+    ): { data: any[]; total: number; page: number; perPage: number } {
+        const allItems = Array.from(this.dataList.entries()).map(([id, obj]) => {
+            const item = { id, ...obj };
+            if (fields && fields.length > 0) {
+                const filtered: any = { id };
+                for (const field of fields) {
+                    if (field in item) filtered[field] = item[field];
+                }
+                return filtered;
+            }
+            return item;
+        });
         const total = allItems.length;
         const start = (page - 1) * perPage;
         const end = start + perPage;

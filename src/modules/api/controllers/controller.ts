@@ -27,7 +27,7 @@ export abstract class Controller {
 
     public async list(request: Request, response: Response) {
         try {
-            const page = parseInt(String(request.query.page))
+            const page = parseInt(String(request.query.page)) || 1
             response.status(httpStatus.OK).json({
                 items: await this.service.listPaginated(page),
                 _links: this.links

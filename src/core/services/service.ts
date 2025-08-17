@@ -8,8 +8,8 @@ export abstract class Service {
     public async createIfNotExists(_user: any): Promise<any> {}
     public async updateIfNotExists(_user: any): Promise<any> {}
 
-    public async listPaginated(page: number): Promise<any> {
-        return this.repository.list(page, 10)
+    public async listPaginated(page: number, fields?: string[]): Promise<any> {
+        return this.repository.list(page, 10, fields)
     }
 
     public async update(id: number, user: any): Promise<any> {
