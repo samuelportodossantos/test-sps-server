@@ -10,12 +10,46 @@ export class AuthController extends Controller {
             return response.status(httpStatus.OK).json({
                 message: "Authenticated sucessfully!",
                 token: token,
-                _links: []
+                _links: {
+                    login: {
+                        method: 'POST',
+                        path: '/auth/login'
+                    },
+                    check: {
+                        method: 'GET',
+                        path: '/auth/check'
+                    }
+                }
             })
         }
         response.status(httpStatus.UNAUTHORIZED).json({
             message: "Authentication failed!",
-            _links: []
+            _links: {
+                login: {
+                    method: 'POST',
+                    path: '/auth/login'
+                },
+                check: {
+                    method: 'GET',
+                    path: '/auth/check'
+                }
+            }
+        })
+    }
+
+    public async isValidToken(request: Request, response: Response): Promise<any> {
+        response.status(httpStatus.OK).json({
+            message: "Authenticated!",
+            _links: {
+                login: {
+                    method: 'POST',
+                    path: '/auth/login'
+                },
+                check: {
+                    method: 'GET',
+                    path: '/auth/check'
+                }
+            }
         })
     }
 
