@@ -1,5 +1,5 @@
 export interface DBInterface {
-    list(page: number, petPage: number, fields?: string[]): { data: any[]; total: number; page: number; perPage: number }
+    list(page: number, petPage: number, fields?: string[]): { items: any[]; total: number; page: number; perPage: number }
     insert(data: any): any
     update(id: number, data: any): any
     delete(id: number): void

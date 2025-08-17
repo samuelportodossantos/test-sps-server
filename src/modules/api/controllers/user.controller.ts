@@ -11,8 +11,9 @@ export class UserController extends Controller {
     public async list(request: Request, response: Response) {
         try {
             const page = parseInt(String(request.query.page)) || 1
+            const content = await this.service.listPaginated(page, ['name', 'email', 'type']) 
             response.status(httpStatus.OK).json({
-                items: await this.service.listPaginated(page, ['name', 'email']),
+                ...content,
                 _links: this.links
             })
         } catch (error: any) {

@@ -8,7 +8,7 @@ export function userUpdateValidation(data: any) {
         email: Joi.string().pattern(VALID_EMAIL_REGEX),
         name: Joi.string(),
         type: Joi.string(),
-        password: Joi.string().pattern(VALID_PASSWORD_REGEX),
+        password: Joi.string().pattern(VALID_PASSWORD_REGEX).optional().allow(''),
     })
 
     const { error, value } = scheme.validate(data)

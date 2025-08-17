@@ -23,7 +23,7 @@ export class MemoryDatabase implements DBInterface {
         page: number = 1,
         perPage: number = 10,
         fields?: string[]
-    ): { data: any[]; total: number; page: number; perPage: number } {
+    ): { items: any[]; total: number; page: number; perPage: number } {
         const allItems = Array.from(this.dataList.entries()).map(([id, obj]) => {
             const item = { id, ...obj };
             if (fields && fields.length > 0) {
@@ -38,8 +38,8 @@ export class MemoryDatabase implements DBInterface {
         const total = allItems.length;
         const start = (page - 1) * perPage;
         const end = start + perPage;
-        const data = allItems.slice(start, end);
-        return { data, total, page, perPage };
+        const items = allItems.slice(start, end);
+        return { items, total, page, perPage };
     }
 
     insert(data: any) {
