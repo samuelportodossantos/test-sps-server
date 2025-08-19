@@ -9,12 +9,14 @@ export class MemoryDatabase implements DBInterface {
     constructor() {
         if (process.env.NODE_ENV === "development" && !this.findByField('email', environment.defaultUser.email)) {
             passwordToHash(environment.defaultUser.password).then((password) => {
-                this.insert({
-                    name: 'Admin',
-                    email: environment.defaultUser.email,
-                    password: password,
-                    type: 'admin'
-                })
+                for (let i = 0; i < 100; i++) {
+                    this.insert({
+                        name: `Admin_${i}`,
+                        email: `${i}_${environment.defaultUser.email}`,
+                        password: password,
+                        type: 'admin'
+                    })
+                }
             })
         }
     }
@@ -43,14 +45,17 @@ export class MemoryDatabase implements DBInterface {
     }
 
     insert(data: any) {
-        this.dataList.set(this.dataList.size, data)
-
+        const key = this.dataList.size
+        this.dataList.set(key, data)
+        return this.dataList.get(key)
     }
+
     update(id: number, data: any) {
         if (!this.dataList.has(id)) {
             throw new Error(`The registry for id ${id} does not exists.`)
         }
         this.dataList.set(id, data)
+        return this.dataList.get(id)
     }
     delete(id: number): void {
         if (!this.dataList.has(id)) {
@@ -66,6 +71,10 @@ export class MemoryDatabase implements DBInterface {
             }
         }
         return null;
+    }
+
+    clear() {
+        this.dataList.clear()
     }
 
 }

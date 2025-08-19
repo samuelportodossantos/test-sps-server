@@ -40,6 +40,5 @@ export class UserService extends Service{
         }
         return await this.repository.update(user.id, user)
     }
-
     
 }
