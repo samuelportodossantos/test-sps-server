@@ -9,14 +9,12 @@ export class MemoryDatabase implements DBInterface {
     constructor() {
         if (process.env.NODE_ENV === "development" && !this.findByField('email', environment.defaultUser.email)) {
             passwordToHash(environment.defaultUser.password).then((password) => {
-                for (let i = 0; i < 100; i++) {
-                    this.insert({
-                        name: `Admin_${i}`,
-                        email: `${i}_${environment.defaultUser.email}`,
-                        password: password,
-                        type: 'admin'
-                    })
-                }
+                this.insert({
+                    name: `Admin`,
+                    email: environment.defaultUser.email,
+                    password: password,
+                    type: 'admin'
+                })
             })
         }
     }
