@@ -10,7 +10,7 @@
 
 1. Clone o repositório:
 	```sh
-	git clone <url-do-repositorio>
+	git clone https://github.com/samuelportodossantos/test-sps-server
 	cd test-sps-server
 	```
 
